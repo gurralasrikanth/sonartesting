@@ -1,0 +1,486 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	<title>How to Install Apache Maven 3.5 on CentOS 7 - Vultr.com</title>
+		<meta name="keywords" content="Vultr docs, tutorials, how to, vps, server">
+			<meta name="description" content="Deploy high performance SSD VPS on the worldwide Vultr network in 60 seconds. Sign up for free and start hosting virtual servers today!">
+	
+	<!-- Facebook -->
+	<meta property="og:url" content="https://www.vultr.com">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Vultr: High Performance SSD Cloud.">
+	<meta property="og:description" content="We are simplifying the cloud. One Login, Eight Countries, Fifteen Cities, Infinite Possibilities.">
+	<meta property="og:site_name" content="Vultr">
+	<meta property="og:image" content="https://www.vultr.com/dist/img/bird-fast-v2.png">
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@Vultr">
+	<meta name="twitter:creator" content="@Vultr">
+	<meta name="twitter:title" content="Vultr: High Performance SSD Cloud">
+	<meta name="twitter:description" content="We are simplifying the cloud. One Login, Eight Countries, Fifteen Cities, Infinite Possibilities.">
+	<meta name="twitter:image:src" content="https://www.vultr.com/dist/img/bird-fast-v2.png" alt="Vultr Twitter">
+
+	<!-- Fix chrome language detection -->
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<meta http-equiv="Content-Language" content="en" />
+
+	<!-- Mobile favicon -->
+	<link rel="icon" sizes="114x114" href="/dist/img/favicon/favicon-114.png">
+	<link rel="icon" sizes="72x72" href="/dist/img/favicon/favicon-72.png">
+	<link rel="icon" sizes="144x144" href="/dist/img/favicon/favicon-144.png">
+	<link rel="icon" sizes="60x60" href="/dist/img/favicon/favicon-60.png">
+	<link rel="icon" sizes="120x120" href="/dist/img/favicon/favicon-120.png">
+	<link rel="icon" sizes="76x76" href="/dist/img/favicon/favicon-76.png">
+	<link rel="icon" sizes="152x152" href="/dist/img/favicon/favicon-152.png">
+	<link rel="icon" sizes="180x180" href="/dist/img/favicon/favicon-180.png">
+
+	<!-- Apple touch icons -->
+	<link rel="apple-touch-icon" href="/dist/img/favicon/favicon-57.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/dist/img/favicon/favicon-114.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/dist/img/favicon/favicon-72.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/dist/img/favicon/favicon-144.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/dist/img/favicon/favicon-60.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/dist/img/favicon/favicon-120.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/dist/img/favicon/favicon-76.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/dist/img/favicon/favicon-152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/dist/img/favicon/favicon-180.png">
+
+	<!-- Styles -->
+	<link href="/dist/css/core.css?v=383" rel="stylesheet">
+	<link href="/dist/css/main.css?v=383" rel="stylesheet">
+	<link href="/dist/css/panel.css?v=383" rel="stylesheet">
+	<link href="/_css/global.css?v=383" rel="stylesheet">
+	<style>
+		@font-face {
+			font-family: 'icons';
+			src:url('/dist/fonts/icons/icons.eot?v=383');
+			src:url('/dist/fonts/icons/icons.eot?v=383') format('embedded-opentype'),
+			url('/dist/fonts/icons/icons.ttf?v=383') format('truetype'),
+			url('/dist/fonts/icons/icons.woff?v=383') format('woff'),
+			url('/dist/fonts/icons/icons.svg?v=383') format('svg');
+			font-weight: normal;
+			font-style: normal;
+		}
+	</style>
+	
+	<!--[if lt IE 9]>
+	<script src="/dist/js/selectivizr-min.js"></script>
+	<script src="/dist/js/html5shiv.min.js"></script>
+	<script src="/dist/js/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+<body>
+
+<div class="page-wrapper">
+	<div class="page-navbar">
+		<nav class="navbar">
+			<div class="container">
+				<button class="navbar-toggle btn btn-link btn-icon" type="button"><i><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></i></button>
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/"></a>
+					<a href="https://my.vultr.com" class="navbar-login btn btn-link btn-icon"><i class="zmdi zmdi-account-o zmdi-hc-fw"></i></a>
+				</div>
+				<div class="navbar-container">
+					<ul class="nav navbar-nav navbar-main">
+						<li>
+							<a href="/">Home</a>
+						</li>
+						<li class="dropdown">
+							<a href="/pricing/" data-toggle="dropdown" onclick="document.location='/pricing/';">Pricing</a>
+							<ul class="dropdown-menu">
+								<li><a href="/pricing/">Vultr Cloud Compute (VC2)</a></li>
+								<li><a href="/pricing/baremetal/">Bare Metal</a></li>
+								<li><a href="/pricing/blockstorage/">Block Storage</a></li>
+								<li><a href="/pricing/dedicatedcloud/">Dedicated Instances</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="/features/">Features</a>
+						</li>
+												<li class="dropdown">
+							<a href="/" data-toggle="dropdown" onclick="document.location='/faq/';">Resources</a>
+							<ul class="dropdown-menu">
+								<li><a href="/faq/">FAQ</a></li>
+								<li><a href="/api/">API</a></li>
+								<li><a href="/metadata/">Metadata</a></li>
+								<li><a href="/docs/">Vultr Docs</a></li>
+								<li><a href="/benchmarks/">Benchmarks</a></li>
+								<li><a href="/status/">Server Status</a></li>
+															</ul>
+						</li>
+						<li class="dropdown">
+							<a href="/about/" data-toggle="dropdown" onclick="document.location='/about/';">Company</a>
+							<ul class="dropdown-menu">
+								<li><a href="/about/">About Us</a></li>
+								<li><a href="/about/team/">Our Team</a></li>
+								<li><a href="/news/">News</a></li>
+								<li><a href="/sla/">SLA</a></li>
+								<li><a href="/contact/">Contact</a></li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="nav navbar-buttons">
+													<li><a href="https://my.vultr.com" class="btn btn-outline btn-light">Log In</a></li>
+							<li><a href="/register/" class="btn btn-dark">Create Account</a></li>
+											</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+	<!-- /.page-navbar -->
+	
+    
+    <div class="page-banner page-banner-subpage page-banner-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-5 col-sm-6">
+                    <div class="banner-slogan">
+                        <a class="h1 slogan-title docs-title" href="/docs/">Vultr Docs</a>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-7 col-sm-6">
+                    <div class="banner-search">
+                        <form method="get" action="/docs/search/">
+                                                        <div class="input-icon">
+                                <input type="text" name="query" value="" class="form-control input-lg" placeholder="Search articles " autocomplete="off"/>
+                                <button type="submit" class="btn btn-link btn-icon btn-lg"><i class="zmdi zmdi-search"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="banner-breadcrumbs">
+                <ul>
+                                                                                                        <li><a href="/docs/">Categories</a><i class="zmdi zmdi-arrow-right"></i></li>
+                                                                                                                                                            <li class="active"><span>View Article</span></li>
+                                                                                        </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.page-banner -->
+        	<div class="promo promo-full promo-docs">
+		<div class="container">
+			<div class="promo-icon icon-docs"></div>
+			<p>You could earn up to <b class="promo-underline">$300</b> by adding new articles!</p>
+			<a class="btn btn-dark" href="/docs/submit/">Get Started Now<i class="zmdi zmdi-long-arrow-right"></i></a>
+		</div>
+	</div>
+
+    <div class="page-main">
+        <div class="container" style="padding-top: 50px;">
+
+            <div class="doc_container">
+
+                <div class="doc_header">
+                    <h1>How to Install Apache Maven 3.5 on CentOS 7</h1>
+                    <div>
+                        Published on: Fri, Dec 15, 2017 at 12:06 pm EST<br/>
+                    </div>
+                    <div>
+                                                    <a class="doc_tag" href="/docs/category/centos/">CentOS</a>
+                                                    <a class="doc_tag" href="/docs/category/java/">Java</a>
+                                                    <a class="doc_tag" href="/docs/category/linux-guides/">Linux Guides</a>
+                                                    <a class="doc_tag" href="/docs/category/server-apps/">Server Apps</a>
+                                            </div>
+                </div>
+
+                <div class="doc_content">
+                    
+                    
+                    <p>Apache Maven is a free and open source software project management tool which is widely used for deploying Java-based applications.</p>
+
+<h4>Prerequisites</h4>
+
+<ul>
+<li>A newly deployed Vultr CentOS 7 x64 server instance.</li>
+<li>A <a href="https://www.vultr.com/docs/how-to-use-sudo-on-debian-centos-and-freebsd">sudo user</a>.</li>
+<li>The server instance has been <a href="https://www.vultr.com/docs/how-to-update-centos-7-ubuntu-16-04-and-debian-8">updated to the latest stable status</a>.</li>
+</ul>
+
+<h4>Step 1: Install OpenJDK 8</h4>
+
+<p>Apache Maven requires Java 1.7 or greater. For this reason, you can install OpenJDK 8 as follows.</p>
+
+<pre><code>sudo yum install -y java-1.8.0-openjdk-devel
+</code></pre>
+
+<p>Having OpenJDK 8 installed, use the command below to verify the result.</p>
+
+<pre><code>java -version
+</code></pre>
+
+<p>If all went well, the output should be similar to this.</p>
+
+<pre><code>openjdk version "1.8.0_141"
+OpenJDK Runtime Environment (build 1.8.0_141-b16)
+OpenJDK 64-Bit Server VM (build 25.141-b16, mixed mode)
+</code></pre>
+
+<p>Finally, setup the <code>JAVA_HOME</code> environment variable.</p>
+
+<pre><code>echo "JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")" | sudo tee -a /etc/profile
+source /etc/profile
+</code></pre>
+
+<h4>Step 2: Install Apache Maven 3.5</h4>
+
+<p>First, download and extract the Apache Maven 3.5 archive.</p>
+
+<pre><code>cd
+wget http://www-us.apache.org/dist/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz
+tar -zxvf apache-maven-3.5.0-bin.tar.gz
+</code></pre>
+
+<p>Move all Apache Maven 3.5 files to a reasonable location and change their ownership to <code>root:root</code>:</p>
+
+<pre><code>sudo mv ~/apache-maven-3.5.0 /opt
+sudo chown -R root:root /opt/apache-maven-3.5.0
+</code></pre>
+
+<p>Create a version-irrelevant symbolic link pointing to the original Apache Maven 3.5 directory.</p>
+
+<pre><code>sudo ln -s /opt/apache-maven-3.5.0 /opt/apache-maven
+</code></pre>
+
+<p>Add the path <code>/opt/apache-maven</code> to the <code>PATH</code> environment variable.</p>
+
+<pre><code>echo 'export PATH=$PATH:/opt/apache-maven/bin' | sudo tee -a /etc/profile
+source /etc/profile
+</code></pre>
+
+<p>Finally, use the command below to verify the installation.</p>
+
+<pre><code>mvn --version
+</code></pre>
+
+<p>The output should resemble the following.</p>
+
+<pre><code>Apache Maven 3.5.0 (ff8f5e7444045639af65f6095c62210b5713f426; 2017-04-03T19:39:06Z)
+Maven home: /opt/maven
+Java version: 1.8.0_141, vendor: Oracle Corporation
+Java home: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.141-1.b16.el7_3.x86_64/jre
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "3.10.0-514.26.2.el7.x86_64", arch: "amd64", family: "unix"
+</code></pre>
+
+<p>You have successfully installed Apache Maven on your CentOS 7 server instance.</p>
+
+
+                </div>
+
+                <div class="doc_footer">
+                                    </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    
+    <div class="page-main docs-contribute">
+        <div class="container">
+
+            <div class="doc_container">
+                <div class="section-row section-center last">
+
+                    <h2 class="section-title">Want to contribute ?</h2>
+                    <p class="section-desc desc-promo">You could earn up to <b class="promo-underline">$300</b> by adding new articles!</p>
+                    <div class="actions multi p-b-0">
+                        <a href="/docs/submit/" class="btn btn-lg btn-success btn-outline">Submit your Article</a>
+                                                    <a href="/docs/suggest/?title=how-to-install-apache-maven-3-5-on-centos-7" class="btn btn-lg btn-success btn-outline">Suggest an Update</a>
+                                                <a href="/docs/request/" class="btn btn-lg btn-success btn-outline">Request an Article</a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    	<div class="page-section section-blue section-center">
+		<div class="container">
+			<h2 class="section-title">Get started in the SSD Cloud!</h2>
+
+			<form method="post" action="/register/" class="register-form">
+				<input type="hidden" name="action" value="djJ8YnFwT2ZLclpqUFJiaTRIV1ZWeHRxMkhKdTlBSW5HZTJ8qtwq3MwtyuAdYwYpGAvXCkJna9XbRoYdTYBq951GdJl1cEOHbZzl"/>
+								<input style="display: none;" name="email" value="" autocomplete="off">
+
+				<div class="register-container" style="margin-bottom:20px;">
+					<div class="form-group">
+						<input name="9d9f36261bb4a2e48e8c184b18d7865c" class="form-control input-lg" type="text" placeholder="Email Address" required/>
+					</div>
+					<div class="form-group">
+						<input name="password" class="form-control input-lg" type="password" placeholder="Password" required/>
+					</div>
+					<button class="btn btn-primary-light btn-lg bottom-btn-primary-light" type="submit">Create Account</button>
+				</div>
+							</form>
+
+		</div>
+	</div>
+	<!-- /.page-section -->
+
+	<div class="page-footer">
+		<footer class="footer-nav">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-3">
+						<h4>Pricing</h4>
+						<ul>
+							<li><a href="/pricing/">Vultr Cloud Compute (VC2)</a></li>
+							<li><a href="/pricing/baremetal/">Bare Metal</a></li>
+							<li><a href="/pricing/blockstorage/">Block Storage</a></li>
+							<li><a href="/pricing/dedicatedcloud/">Dedicated Instances</a></li>
+							<li><a href="/ddos/">DDoS Protection</a></li>
+						</ul>
+					</div>
+					<div class="col-xs-3">
+						<h4>Features</h4>
+						<ul>
+							<li><a href="/features/">Vultr Cloud Compute (VC2)</a></li>
+							<li><a href="/features/baremetal/">Bare Metal</a></li>
+							<li><a href="/features/blockstorage/">Block Storage</a></li>
+							<li><a href="/features/dedicatedcloud/">Dedicated Cloud</a></li>
+							<li><a href="/locations/">Datacenter Locations</a></li>
+							<li><a href="/features/controlpanel/">Control Panel</a></li>
+							<li><a href="/operating-systems/">Operating Systems</a></li>
+							<li><a href="/features/uploadiso/">Upload ISO</a></li>
+							<li><a href="/apps/">One-Click Apps</a></li>
+							<li><a href="/features/bgp/">Bring Your IP Space</a></li>
+						</ul>
+					</div>
+					<div class="col-xs-3">
+						<h4>Resources</h4>
+						<ul>
+							<li><a href="/faq/">FAQ</a></li>
+							<li><a href="/api/">API</a></li>
+							<li><a href="/docs/">Vultr Docs</a></li>
+							<li><a href="/benchmarks/">Benchmarks</a></li>
+							<li><a href="/status/">Server Status</a></li>
+														<li><a href="/bug-bounty/">Bug Bounty</a></li>
+							<li><a href="/coupons/">Coupons</a></li>
+							<li><a href="/tools/">Toolbox</a></li>
+						</ul>
+					</div>
+					<div class="col-xs-3">
+						<h4>Company</h4>
+						<ul>
+							<li><a href="/about/">About Us</a></li>
+							<li><a href="/about/team/">Our Team</a></li>
+							<li><a href="/news/">News</a></li>
+							<li><a href="/affiliate/">Logos &amp; Banners</a></li>
+							<li><a href="/corporate/careers/">Careers</a></li>
+							<li><a href="/sla/">SLA</a></li>
+							<li><a href="/legal/tos/">Legal</a></li>
+							<li><a href="/contact/">Contact</a></li>
+							<li></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<div style="text-align:center; padding:0px 0px 25px 0px; font-size:15px; opacity:.8;">
+			Over 14<span style="font-family:arial; font-size:18px;">,</span>795<span style="font-family:arial; font-size:18px;">,</span>879 Cloud Servers Launched
+		</div>
+
+		<footer class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6 col-lg-push-6 col-xs-12">
+						<ul class="nav">
+							<li><a href="/legal/tos/">Terms of Service</a></li>
+							<li><a href="/legal/use_policy/">AUP / DMCA</a></li>
+							<li><a href="/legal/privacy/">Privacy Policy</a></li>
+						</ul>
+						<ul class="social">
+							<li><a href="https://www.facebook.com/Vultr/" class="btn btn-primary btn-circle btn-icon btn-outline btn-sm"><i class="zmdi zmdi-facebook"></i></a></li>
+							<li><a href="https://www.twitter.com/vultr/" class="btn btn-primary btn-circle btn-icon btn-outline btn-sm"><i class="zmdi zmdi-twitter"></i></a></li>
+						</ul>
+					</div>
+					<div class="col-lg-6 col-lg-pull-6 col-xs-12">
+						<p class="footer-copyright">
+							Copyright 2018 &copy; Vultr Holdings Corporation. All rights reserved.
+							<small>VULTR is a registered trademark of Vultr Holdings Corporation.</small>
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<!-- /.page-footer -->
+
+	</div>
+
+<!-- Scripts -->
+<script src="/dist/js/jquery.min.js?v=383"></script>
+<script src="/dist/js/core.min.js?v=383"></script>
+<script src="/dist/js/main.js?v=383"></script>
+<script src="/_js/global.js?v=383"></script>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-1366737-18', 'auto');
+ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 858656304;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/858656304/?guid=ON&amp;script=0"/>
+</div>
+</noscript>
+<script type="text/javascript">
+    adroll_adv_id = "DUKHAKVYIJASHDUBG4V7RE";
+    adroll_pix_id = "E23RMKDBEFAEXMXLWK3IWO";
+    (function () {
+        var _onload = function(){
+            if (document.readyState && !/loaded|complete/.test(document.readyState)){setTimeout(_onload, 10);return}
+            if (!window.__adroll_loaded){__adroll_loaded=true;setTimeout(_onload, 50);return}
+            var scr = document.createElement("script");
+            var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
+            scr.setAttribute('async', 'true');
+            scr.type = "text/javascript";
+            scr.src = host + "/j/roundtrip.js";
+            ((document.getElementsByTagName('head') || [null])[0] ||
+                document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+        };
+        if (window.addEventListener) {window.addEventListener('load', _onload, false);}
+        else {window.attachEvent('onload', _onload)}
+    }());
+</script>
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '828098694004178');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=828098694004178&ev=PageView&noscript=1"/></noscript>
+<script>
+!function(e,n,u,a){e.twq||(a=e.twq=function(){a.exe?a.exe.apply(a,arguments):
+a.queue.push(arguments);},a.version='1',a.queue=[],t=n.createElement(u),
+t.async=!0,t.src='//static.ads-twitter.com/uwt.js',s=n.getElementsByTagName(u)[0],
+s.parentNode.insertBefore(t,s))}(window,document,'script');
+// Insert Twitter Pixel ID and Standard Event data below
+twq('init','nuyim');
+twq('track','PageView');
+</script>
+<script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"5624299"};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script><noscript><img src="//bat.bing.com/action/0?ti=5624299&Ver=2" height="0" width="0" style="display:none; visibility: hidden;" /></noscript>
+
+
+</body>
+</html>
